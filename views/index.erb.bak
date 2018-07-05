@@ -1,0 +1,40 @@
+<form action="/confirm" method="post">
+<table border="0">
+  <tr>
+    <td align="right"><b>DriverID:</b></td>
+    <td><input type="text" name="id" size="30" maxlength="20"></td>
+  </tr>
+  <tr>
+    <td align="right"><b>メッセージ:</b></td>
+    <td><input type="text" name="msg" size="30" maxlength="20"></td>
+  </tr>
+
+  <tr>
+  <tr>
+    <td align="right"><b>タイトル:</b></td>
+    <td><input type="text" name="title" size="30" maxlength="20"></td>
+  </tr>
+
+  <tr>
+    <td align="right"><b>通知区分:</b></td>
+    <td>
+      <input type="radio" name="kbn" value="1">APP更新のお知らせ
+      <input type="radio" name="kbn" value="2">重要なお知らせ
+    </td>
+  </tr>
+  <tr>
+    <td align="right"><b>imgファイル：</b></td>
+    <td><input type="file" name="img"></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <input type="submit" value="送信">
+      <input type="reset" value="リセット">
+    </td>
+  </tr>
+</table>
+</form>
+
+
+
