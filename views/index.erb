@@ -1,15 +1,24 @@
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=***&sensor=false"></script>
+ 
 <script>
-    function initMap() {
-        var latlng = new google.maps.LatLng( 34.808502, 135.639683 );//中心の緯度, 経度
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 14,//ズームの調整
-          center: latlng//上で設定した中心
-        });
-        var marker = new google.maps.Marker({
-          position: latlng,
-          map: map
-        });
-      }
+function initialize() {
+    // キャンバスの要素を取得する
+    var canvas = document.getElementById('map_canvas');
+ 
+    // 中心の位置座標を指定
+    var latlng = new google.maps.LatLng(34.692543, 135.52984049999998);
+ 
+    // 地図オプションの設定
+    var mapOptions = {
+        zoom: 17,                   // (必須)デフォルトの地図の縮尺値
+        center: latlng,             // (必須)デフォルトの地図の中心座標
+        scrollwheel: false,         // ホイールでの拡大・縮小
+        overviewMapControl: true,   // 地図の右下に、地図を俯瞰できるウィンドウUIが実装される
+    };
+ 
+    // canvasに[mapOptions]内容の、地図のインスタンス(map)を作成する
+    var map = new google.maps.Map(canvas, mapOptions);
+}
+ 
+google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYibp6uMIbDm8tng2JfGd0KSWhBucdluQ&callback=initMap"></script>
-
