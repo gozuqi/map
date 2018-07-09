@@ -31,8 +31,8 @@
         var from = document.getElementById('from').value;
         var to = document.getElementById('to').value;
         var request = {
-          origin: haight,
-          destination: oceanCeach,
+          origin: from,
+          destination: to,
           travelMode: google.maps.TravelMode.WALKING
         };
         DS.route(request, function(result, status) {
