@@ -1,40 +1,52 @@
-<form action="/confirm" method="post">
-<table border="0">
-  <tr>
-    <td align="right"><b>DriverID:</b></td>
-    <td><input type="text" name="id" size="30" maxlength="20"></td>
-  </tr>
-  <tr>
-    <td align="right"><b>メッセージ:</b></td>
-    <td><input type="text" name="msg" size="30" maxlength="20"></td>
-  </tr>
 
-  <tr>
-  <tr>
-    <td align="right"><b>タイトル:</b></td>
-    <td><input type="text" name="title" size="30" maxlength="20"></td>
-  </tr>
+  <div id="map" style="width:620px; height:400px"></div>
+  <script type="text/javascript">
+    function initMap() {
+      var DS = new google.maps.DirectionsService();
+      var DR = new google.maps.DirectionsRenderer();
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 35.632896, lng: 139.880394} ,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        /* marking */
+        var m_latlng1 = new google.maps.LatLng(35.632896,139.880394);
+        var marker1 = new google.maps.Marker({
+          position: m_latlng1,
+           map: map
+        });
+        var m_latlng2 = new google.maps.LatLng(35.625663,139.884238);
+          var marker2 = new google.maps.Marker({
+          position: m_latlng2,
+          map: map
+        });
 
-  <tr>
-    <td align="right"><b>通知区分:</b></td>
-    <td>
-      <input type="radio" name="kbn" value="1">APP更新のお知らせ
-      <input type="radio" name="kbn" value="2">重要なお知らせ
-    </td>
-  </tr>
-  <tr>
-    <td align="right"><b>imgファイル：</b></td>
-    <td><input type="file" name="img"></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td>
-      <input type="submit" value="送信">
-      <input type="reset" value="リセット">
-    </td>
-  </tr>
-</table>
-</form>
+
+
+        /* map を DirectionsRendererオブジェクトのsetMap()を使って関連付け */
+        DR.setMap(map);
+        document.getElementById("btn").onclick = function() {
+        /* 開始地点と目的地点、ルーティングの種類を設定 */
+        var from = document.getElementById('from').value;
+        var to = document.getElementById('to').value;
+        var request = {
+          origin: from,
+          destination: to,
+          travelMode: google.maps.TravelMode.WALKING
+        };
+        DS.route(request, function(result, status) {
+          DR.setDirections(result);
+        });
+      }
+    }
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYibp6uMIbDm8tng2JfGd0KSWhBucdluQ&callback=initMap">
+  </script>
+
+
+
 
 
 

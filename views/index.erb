@@ -2,42 +2,65 @@
   <div id="map" style="width:620px; height:400px"></div>
   <script type="text/javascript">
     function initMap() {
-      var DS = new google.maps.DirectionsService();
-      var DR = new google.maps.DirectionsRenderer();
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 35.632896, lng: 139.880394} ,
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-        /* marking */
-        var m_latlng1 = new google.maps.LatLng(35.632896,139.880394);
-        var marker1 = new google.maps.Marker({
-          position: m_latlng1,
-           map: map
-        });
-        var m_latlng2 = new google.maps.LatLng(35.625663,139.884238);
-          var marker2 = new google.maps.Marker({
-          position: m_latlng2,
-          map: map
-        });
+    let startLatLng = [35.712408, 139.776188]; // 上野駅
+let targetLatLng = [35.710552, 139.777074]; // LIG
+let goalMarkerImg = 'https://test.l-svr.net/blog/images/marker-on-dummy.png';
+let map;
 
+function initialize() {
+  let options = {
+    zoom: 16,
+    center: new google.maps.LatLng(startLatLng[0], startLatLng[1]),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  map = new google.maps.Map(document.getElementById('map_canvas'), options);
+  let rendererOptions = {
+    map: map, // 描画先の地図
+    draggable: true, // ドラッグ可
+    preserveViewport: true // centerの座標、ズームレベルで表示
+  };
+  let directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+  let directionsService = new google.maps.DirectionsService();
+  directionsDisplay.setMap(map);
+  let request = {
+    origin: new google.maps.LatLng(startLatLng[0], startLatLng[1]), // スタート地点
+    destination: new google.maps.LatLng(targetLatLng[0], targetLatLng[1]), // ゴール地点
+    travelMode: google.maps.DirectionsTravelMode.WALKING, // 移動手段
+  };
+  directionsService.route(request, function(response,status) {
+    if (status === google.maps.DirectionsStatus.OK) {
+      new google.maps.DirectionsRenderer({
+        map: map,
+        directions: response,
+        suppressMarkers: true // デフォルトのマーカーを削除
+      });
+      let leg = response.routes[0].legs[0];
+      makeMarker(leg.end_location, markers.goalMarker, map);
+      setTimeout(function() {
+        map.setZoom(16); // ルート表示後にズーム率を変更
+      });
+    }
+  });
+}
 
+function makeMarker(position, icon, map) {
+  let marker = new google.maps.Marker({
+    position: position,
+    map: map,
+    icon: icon
+  });
+}
 
-        /* map を DirectionsRendererオブジェクトのsetMap()を使って関連付け */
-        DR.setMap(map);
-        document.getElementById("btn").onclick = function() {
-        /* 開始地点と目的地点、ルーティングの種類を設定 */
-        var from = document.getElementById('from').value;
-        var to = document.getElementById('to').value;
-        var request = {
-          origin: from,
-          destination: to,
-          travelMode: google.maps.TravelMode.WALKING
-        };
-        DS.route(request, function(result, status) {
-          DR.setDirections(result);
-        });
-      }
+let markers = {
+  goalMarker: new google.maps.MarkerImage(
+    goalMarkerImg, // 画像のパス
+    new google.maps.Size(24, 33), // マーカーのwidth,height
+    new google.maps.Point(0, 0), // 画像データの中で、どの部分を起点として表示させるか
+    new google.maps.Point(12, 33), // マーカーのpositionで与えられる緯度経度を画像のどの点にするか
+    new google.maps.Size(24, 33)) // 画像の大きさを拡大縮小
+};
+
+    initialize()
     }
   </script>
 
