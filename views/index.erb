@@ -1,6 +1,6 @@
-
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script>
+
     function initMap() {
         var myLatLng = {lat: 35.658581, lng: 139.745433};
 
@@ -9,12 +9,12 @@
             center: myLatLng
         });
 
-        var imagePath = '表示させたい画像パス';
         var marker = new google.maps.Marker({
             position: myLatLng,
             map: map,
-            icon: imagePath
+            animation: google.maps.Animation.BOUNCE
         });
     }
     initMap();
+
 </script>
