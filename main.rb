@@ -8,8 +8,8 @@ class MainApp < Sinatra::Base
      erb :index
   end
 
-  post '/sample' do
-     erb :sample
+  post '/route' do
+     erb :route
   end
 
   post '/sns' do
