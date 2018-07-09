@@ -1,24 +1,4 @@
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYibp6uMIbDm8tng2JfGd0KSWhBucdluQ&sensor=false"></script>
- 
-<script>
-function initialize() {
-    // キャンバスの要素を取得する
-    var canvas = document.getElementById('map_canvas');
- 
-    // 中心の位置座標を指定
-    var latlng = new google.maps.LatLng(34.692543, 135.52984049999998);
- 
-    // 地図オプションの設定
-    var mapOptions = {
-        zoom: 17,                   // (必須)デフォルトの地図の縮尺値
-        center: latlng,             // (必須)デフォルトの地図の中心座標
-        scrollwheel: false,         // ホイールでの拡大・縮小
-        overviewMapControl: true,   // 地図の右下に、地図を俯瞰できるウィンドウUIが実装される
-    };
- 
-    // canvasに[mapOptions]内容の、地図のインスタンス(map)を作成する
-    var map = new google.maps.Map(canvas, mapOptions);
-}
- 
-google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3238.610389039536!2d139.7065931653495!3d35.735799334584605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188d5f776638f9%3A0xc1b61dc27a2b03c9!2z44CSMTcwLTAwMTQg5p2x5Lqs6YO96LGK5bO25Yy65rGg6KKL77yS5LiB55uu77yW77yZ4oiS77yXIOaBqeeUsOODk-ODqw!5e0!3m2!1sja!2sjp!4v1450164755498" width="800" height="600" frameborder="0" style="border:0" allowfullscreen></iframe>
+
