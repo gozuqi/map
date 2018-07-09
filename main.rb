@@ -8,11 +8,8 @@ class MainApp < Sinatra::Base
      erb :index
   end
 
-  post '/confirm' do
-     @id = params[:id]
-     @msg = params[:msg]
-     @title = params[:title]
-     erb :confirm
+  post '/sample' do
+     erb :sample
   end
 
   post '/sns' do
