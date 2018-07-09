@@ -1,20 +1,36 @@
 
   <div id="map" style="width:620px; height:400px"></div>
   <script type="text/javascript">
-    function initMap() {
+    /*function initMap() {
       var opts = {
         zoom: 15,
         center: new google.maps.LatLng(35.66236, 139.760343)
       };
       var map = new google.maps.Map(document.getElementById("map"), opts);
+    }*/
+    function initMap() {
+      var DS = new google.maps.DirectionsService();
+      var DR = new google.maps.DirectionsRenderer();
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 35.170981, lng: 136.881556} ,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+      /* map を DirectionsRendererオブジェクトのsetMap()を使って関連付け */
+      DR.setMap(map);
+      document.getElementById("btn").onclick = function() {
+      /* 開始地点と目的地点、ルーティングの種類を設定 */
+      var from = document.getElementById('from').value;
+      var to = document.getElementById('to').value;
+      var request = {
+        origin: from,
+        destination: to,
+        travelMode: google.maps.TravelMode.WALKING
+      };
+      DS.route(request, function(result, status) {
+        DR.setDirections(result);
+      });
     }
-    function initialize() {
-      if (GBrowserIsCompatible()) {
-        var map = new GMap2(document.getElementById("map_canvas"));
-        map.setCenter(new GLatLng(35.681379,139.765577), 13);
-        var directions = new GDirections(map, document.getElementById('route'));
-        directions.load('from: 東京駅 to: 渋谷駅', {locale: 'ja_JP'});
-      }
     }
   </script>
 
@@ -22,12 +38,6 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYibp6uMIbDm8tng2JfGd0KSWhBucdluQ&callback=initMap&libraries=places">
   </script>
 
-  <body onload="initialize()" onunload="GUnload()">
-    <script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyBYibp6uMIbDm8tng2JfGd0KSWhBucdluQ&sensor=false"
-            type="text/javascript" charset="utf-8"></script>
-    <div id="map_canvas" style="width: 500px; height: 300px"></div>
-    <div id="route" style="width: 500px; height: 200px;overflow: scroll"></div>
-  </body>
 
 
 
