@@ -9,6 +9,11 @@
           zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         });
+        var m_latlng1 = new google.maps.LatLng(35.170981,136.881556);
+        var marker1 = new google.maps.Marker({
+          position: m_latlng1,
+           map: map
+         });
         /* map を DirectionsRendererオブジェクトのsetMap()を使って関連付け */
         DR.setMap(map);
         document.getElementById("btn").onclick = function() {
