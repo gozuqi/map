@@ -1,58 +1,50 @@
-<script type='text/javascript'>
-var mapCanvas;
-var info="";
-function initialize() {
-  var myOptions = {
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  mapCanvas = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-  
-  var rendererOptions = {
-    map: mapCanvas
-  };
-  var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions)
-  
-  var request = { 
-    origin: "東京駅", 
-    destination: "大阪駅", 
-		waypoints:[
-			{
-				location: "静岡駅"
-			},
-			{
-				location: "名古屋駅"
-			}
-		],
-//sensor:true,
-		travelMode: google.maps.DirectionsTravelMode.DRIVING
-  };
-  
-  directionsService = new google.maps.DirectionsService();
-  directionsService.route(request, function(response, status) {
-    if (status == google.maps.DirectionsStatus.OK) {
-      var route = response.routes[0];
-      mapCanvas.fitBounds(route.bounds);
-			for(i=0;i<route.legs.length;i++){
-				info+="<p>route.legs["+i+"].start_address:"+route.legs[i].start_address+"<br>route.legs["+i+"].end_address="+route.legs[i].end_address+"</p>";
-			}
-			route.legs[0].start_address = "<b>出発地点</b><br>JR東京駅<br>(" + route.legs[0].start_address + ")";
-			route.legs[1].start_address = "<b>経由地１</b><br>JR静岡駅<br>(" + route.legs[1].start_address + ")";
-			route.legs[2].start_address = "<b>経由地２</b><br>JR名古屋駅<br>(" + route.legs[2].start_address + ")";
-			route.legs[2].end_address = "<b>終着地点</b><br>JR大阪駅<br>(" + route.legs[2].end_address + ")";
-			directionsDisplay.setDirections(response);
-			document.getElementById('info').innerHTML = info;
+
+  <div id="map" style="width:620px; height:400px"></div>
+  <script type="text/javascript">
+    function initMap() {
+      var DS = new google.maps.DirectionsService();
+      var DR = new google.maps.DirectionsRenderer();
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 35.632896, lng: 139.880394} ,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        /* marking */
+        var m_latlng1 = new google.maps.LatLng(35.632896,139.880394);
+        var marker1 = new google.maps.Marker({
+          position: m_latlng1,
+           map: map
+        });
+        var m_latlng2 = new google.maps.LatLng(35.625663,139.884238);
+          var marker2 = new google.maps.Marker({
+          position: m_latlng2,
+          map: map
+        });
+
+
+
+        /* map を DirectionsRendererオブジェクトのsetMap()を使って関連付け */
+        DR.setMap(map);
+        document.getElementById("btn").onclick = function() {
+        /* 開始地点と目的地点、ルーティングの種類を設定 */
+        var from = document.getElementById('from').value;
+        var to = document.getElementById('to').value;
+        var request = {
+          origin: from,
+          destination: to,
+          travelMode: google.maps.TravelMode.WALKING
+        };
+        DS.route(request, function(result, status) {
+          DR.setDirections(result);
+        });
+      }
     }
-  });
-}
-google.maps.event.addDomListener(window, "load", initialize);
-</script>
+  </script>
 
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYibp6uMIbDm8tng2JfGd0KSWhBucdluQ&callback=initMap">
+  </script>
 
-
-<body>
-<div id="map_canvas" style="width:600px;height:400px;"></div>
-<div id="info" style="width:600px;height:410px;"></div>
-</body>
 
 
 
